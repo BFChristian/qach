@@ -9,7 +9,7 @@ export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    const hashed = await bcrypt.hash(createUserDto.password, 10);
+    const hashed = bcrypt.hashSync(createUserDto.password, 10);
     const user = await this.prisma.user.create({
       data: { ...createUserDto, password: hashed },
     });
@@ -53,6 +53,14 @@ export class UsersService {
   async delete(id: number) {
     const user = await this.prisma.user.delete({
       where: { id },
+    });
+    return user;
+  }
+
+  async softDelete(id: number) {
+    const user = await this.prisma.user.update({
+      where: { id },
+      data: { deletedAt: new Date() },
     });
     return user;
   }

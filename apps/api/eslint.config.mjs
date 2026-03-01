@@ -1,4 +1,3 @@
-// @ts-check
 import { base } from '@qach/eslint-config';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
