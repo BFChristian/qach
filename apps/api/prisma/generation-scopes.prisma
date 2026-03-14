@@ -1,0 +1,5 @@
+enum GenerationScope {
+  API_ONLY
+  UI_ONLY
+  E2E
+}

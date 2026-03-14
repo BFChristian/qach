@@ -1,0 +1,22 @@
+model Generation {
+    id        Int     @id @default(autoincrement())
+    projectId Int
+    project   Project @relation(fields: [projectId], references: [id])
+
+    inputStory String
+    inputAC    String
+    inputMeta  String
+
+    scope      GenerationScope
+    templateId Int
+    model      String
+    provider   String
+
+    result    Json
+    tokensIn  Int
+    tokensOut Int
+    latencyMs Int
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}

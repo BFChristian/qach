@@ -1,0 +1,14 @@
+model Project {
+    id          Int     @id @default(autoincrement())
+    name        String
+    description String?
+    userId      Int?
+    user        User?   @relation(fields: [userId], references: [id])
+
+    //stories          Story[]
+    generations Generation[]
+    //knowLedgeSources KnowledgeSource[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
