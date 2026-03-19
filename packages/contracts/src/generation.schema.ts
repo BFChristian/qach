@@ -1,30 +1,48 @@
 import { z } from 'zod';
 
-export const QAchPromptInputSchema = z.object({
-  story: z.string().min(10),
-  acceptanceCriteria: z.array(z.string()).default([]),
-  context: z.string().optional(),
-  scope: z.enum(['API_ONLY', 'UI_ONLY', 'E2E', 'MIXED']).optional(),
+// ============= INPUT SCHEMA =============
+export const GenerateRequestSchema = z.object({
+  feature: z.string().describe('Feature o user story a testear'),
+  context: z.string().optional().describe('Stack técnico, frameworks, etc.'),
+  additionalInstructions: z
+    .string()
+    .optional()
+    .describe('Instrucciones adicionales'),
+  provider: z.string().optional().describe('anthropic, openai, deepseek'),
+  model: z.string().optional().describe('Modelo específico'),
+  apiKey: z.string().optional().describe('API key del usuario (opcional)'),
 });
 
-export const QAchOutputSchema = z.object({
-  meta: z.object({
-    version: z.string(),
-    model: z.string().optional(),
+// ============= OUTPUT SCHEMA =============
+const TestStepSchema = z.object({
+  order: z.number(),
+  action: z.string(), // "Click login button"
+  target: z.string().optional(), // "button#login-submit"
+  input: z.string().optional(), // "user@test.com"
+  expected: z.string(), // "Redirect to /dashboard"
+});
+
+const TestCaseSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  type: z.enum(['positive', 'negative', 'edge', 'boundary']),
+  priority: z.enum(['critical', 'high', 'medium', 'low']),
+  suite: z.enum(['api', 'ui', 'e2e']),
+  preconditions: z.array(z.string()),
+  steps: z.array(TestStepSchema),
+  tags: z.array(z.string()).optional(),
+});
+
+export const GenerationResponseSchema = z.object({
+  testCases: z.array(TestCaseSchema),
+  risks: z.array(z.object({ description: z.string(), severity: z.string() })),
+  assumptions: z.array(z.string()),
+  questions: z.array(z.string()),
+  checklist: z.array(z.object({ item: z.string(), category: z.string() })),
+  metadata: z.object({
+    scope: z.string(),
+    template: z.string().optional(),
+    model: z.string(),
+    generatedAt: z.string(),
   }),
-  questionsForPO: z.array(z.string()).default([]),
-  assumptions: z.array(z.string()).default([]),
-  risks: z.array(z.string()).default([]),
-  testCases: z
-    .array(
-      z.object({
-        id: z.string(),
-        title: z.string(),
-        priority: z.enum(['P0', 'P1', 'P2']).default('P1'),
-        steps: z.array(z.string()).min(1),
-        expected: z.array(z.string()).min(1),
-        tags: z.array(z.string()).default([]),
-      }),
-    )
-    .min(1),
 });

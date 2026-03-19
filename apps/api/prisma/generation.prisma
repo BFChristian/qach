@@ -12,11 +12,10 @@ model Generation {
     model      String
     provider   String
 
-    result    Json
-    tokensIn  Int
-    tokensOut Int
-    latencyMs Int
+    result     Json
+    tokensIn   Int
+    tokensOut  Int
+    durationMs Int
 
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
 }
