@@ -17,8 +17,8 @@ export const GenerateRequestSchema = z.object({
 const TestStepSchema = z.object({
   order: z.number(),
   action: z.string(), // "Click login button"
-  target: z.string().optional(), // "button#login-submit"
-  input: z.string().optional(), // "user@test.com"
+  target: z.string().nullable(), // "button#login-submit"
+  input: z.string().nullable(), // "user@test.com"
   expected: z.string(), // "Redirect to /dashboard"
 });
 
@@ -30,7 +30,7 @@ const TestCaseSchema = z.object({
   suite: z.enum(['api', 'ui', 'e2e']),
   preconditions: z.array(z.string()),
   steps: z.array(TestStepSchema),
-  tags: z.array(z.string()).optional(),
+  tags: z.array(z.string()).nullable(),
 });
 
 export const GenerationResponseSchema = z.object({
@@ -41,7 +41,7 @@ export const GenerationResponseSchema = z.object({
   checklist: z.array(z.object({ item: z.string(), category: z.string() })),
   metadata: z.object({
     scope: z.string(),
-    template: z.string().optional(),
+    template: z.string().nullable(),
     model: z.string(),
     generatedAt: z.string(),
   }),
