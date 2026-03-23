@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const GenerationScope = {
+  API_ONLY: 'API_ONLY',
+  UI_ONLY: 'UI_ONLY',
+  E2E: 'E2E'
+} as const
+
+export type GenerationScope = (typeof GenerationScope)[keyof typeof GenerationScope]
+
+
 export const UserRole = {
   USER: 'USER',
   ADMIN: 'ADMIN'

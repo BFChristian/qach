@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { User, UserRole } from '@prisma/client';
+import { User, UserRole } from '../../shared/database/prisma/client';
 import { META_ROLES } from '../decorators/auth.decorator';
 
 @Injectable()

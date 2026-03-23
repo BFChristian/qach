@@ -1,6 +1,6 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UserRole } from '@prisma/client';
+import { UserRole } from '../../shared/database/prisma/client';
 import { RolesGuard } from '../guards/roles.guard';
 
 export const META_ROLES = 'roles';
