@@ -44,6 +44,10 @@ export class GenerationService {
   private buildUserPrompt(dto: GenerationRequestDto): string {
     let prompt = `Generate comprehensive test cases for the following feature:\n\n${dto.feature}`;
 
+    if (dto.scope) {
+      prompt += `\n\nScope: Focus on ${dto.scope.toUpperCase()} testing only.`;
+    }
+
     if (dto.context) {
       prompt += `\n\nTechnical Context:\n${dto.context}`;
     }

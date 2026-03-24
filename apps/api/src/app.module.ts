@@ -7,6 +7,8 @@ import { PrismaModule } from './shared/database/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { GenerationModule } from './generation/generation.module';
 import { ProjectsModule } from './projects/projects.module';
+import { StoriesModule } from './stories/stories.module';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { ProjectsModule } from './projects/projects.module';
     AuthModule,
     GenerationModule,
     ProjectsModule,
+    StoriesModule,
+    ThrottlerModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
