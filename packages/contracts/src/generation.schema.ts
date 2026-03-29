@@ -10,7 +10,7 @@ export const GenerateRequestSchema = z.object({
     .string()
     .optional()
     .describe('Technical stack, frameworks, or relevant project context'),
-  scope: ScopeEnum.optional().describe('Test case scope: api, ui, or e2e'),
+  scope: ScopeEnum.describe('Test case scope: api, ui, or e2e'),
   additionalInstructions: z
     .string()
     .optional()

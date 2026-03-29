@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AiService } from 'src/shared/ai/ai.service';
 import { GenerationRequestDto } from './dto/generation-request.dto';
@@ -12,10 +12,15 @@ export class GenerationService {
   ) {}
 
   async generate(dto: GenerationRequestDto, res: Response) {
-    // System prompt desde variable de entorno
     const systemPrompt = this.config.get<string>('SYSTEM_PROMPT');
     if (!systemPrompt) {
       throw new Error('SYSTEM_PROMPT is not defined in environment variables');
+    }
+    if (!dto.feature || dto.feature.trim() === '') {
+      throw new BadRequestException('Feature description is required');
+    }
+    if (!dto.scope || dto.scope.trim() === '') {
+      throw new BadRequestException('Scope is required');
     }
 
     // Construir el prompt del usuario
